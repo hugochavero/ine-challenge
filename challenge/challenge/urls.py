@@ -15,15 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-# from challenge.users.urls import v1_urlpatterns
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,
+)
 
+jwt_urls = [
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+]
 
 basepatterns = [
     path('admin/', admin.site.urls),
 ]
 
 users_urls = [
-    path('v1/', include('users.urls.v1'))
+    path('api/v1/', include('users.urls.v1'))
 ]
 
-urlpatterns = basepatterns + users_urls
+urlpatterns = basepatterns + users_urls + jwt_urls
