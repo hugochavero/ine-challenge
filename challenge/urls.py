@@ -22,17 +22,15 @@ from rest_framework_simplejwt.views import (
 )
 
 jwt_urls = [
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
 ]
 
 basepatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
 ]
 
-users_urls = [
-    path('api/v1/', include('users.urls.v1'))
-]
+users_urls = [path("api/v1/", include("users.urls.v1"))]
 
 urlpatterns = basepatterns + users_urls + jwt_urls

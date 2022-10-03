@@ -1,3 +1,8 @@
+"""
+Challenge constants
+"""
+
+
 class ViewActions:
     """View actions constants"""
 

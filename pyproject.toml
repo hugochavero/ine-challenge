@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "ine-challenge"
 version = "0.1.0"
-description = ""
-authors = ["Hugo Chavero <hugo.chavero@mercadolibre.com>"]
+description = "Dev challenge for INE"
+authors = ["Hugo Chavero <hugochavero@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -14,10 +14,14 @@ pytest-django = "^4.5.2"
 pytest-mock = "^3.9.0"
 djangorestframework-simplejwt = "^5.2.0"
 djangorestframework-api-key = "^2.2.0"
+mysqlclient = "^2.1.1"
+django-mysql = "^4.7.1"
+pytest-cov = "^4.0.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.8.0"
 pylint = "^2.15.3"
+pre-commit = "^2.20.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
