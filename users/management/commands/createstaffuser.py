@@ -5,7 +5,7 @@ import os
 
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
 from users.models import User
 
@@ -15,11 +15,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         try:
-            username = os.environ["INITIAL_STAFF_USERNAME"]
-            email = os.environ["INITIAL_STAFF_EMAIL"]
-            userpass = os.environ["INITIAL_STAFF_PASSWORD"]
-        except KeyError as exc:
-            raise CommandError(f"{exc} environment variable does not defined")
+            env_staff_user = "INITIAL_STAFF_USERNAME"
+            env_staff_email = "INITIAL_STAFF_EMAIL"
+            env_staff_pass = "INITIAL_STAFF_PASSWORD"
+            username = os.environ[env_staff_user]
+            email = os.environ[env_staff_email]
+            userpass = os.environ[env_staff_pass]
+            os.unsetenv(env_staff_user)
+            os.unsetenv(env_staff_email)
+            os.unsetenv(env_staff_pass)
+        except KeyError:
+            self.stdout.write("At least one staff user creation env var were not found. (See README.md)")
+            self.stdout.write("Skipping staff user creation.")
 
         self.stdout.write(f"Creating {username} staff user")
 

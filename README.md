@@ -2,46 +2,63 @@
 Author: Hugo Chavero
 
 
-### Pre requisites
+### Pre requisites (installed on your local environment)
 * Docker
 * docker-compose
 
-### Run application
-* Build and run on `http://127.0.0.1:8000/`
-> docker-compose up
+### Build and Run application
+If this is your first time running the application, you have to:
+* create your local env file
+```
+cp .env.dev .env
+```
+* Set your staff user vars (into .env)
+```
+set INITIAL_STAFF_USERNAME=staffuser
+set INITIAL_STAFF_EMAIL=staffuser@email.com
+set INITIAL_STAFF_PASSWORD=***********
+```
+> Staff password must include lowercase and upercase letters, digits and symbols. At least 8 chars
+
+* To build and run, run:
+```
+docker-compose up
+```
+* Open the app on `http://127.0.0.1:8000/`
+
 
 ### Run tests
-> docker-compose run web --rm web pytest
+```
+docker-compose run web --rm web pytest
+```
 
 ### Run tests with coverage
-> docker-compose run web --rm web pytest --cov
+```
+docker-compose run web --rm web pytest --cov
+```
 
 
 ## Authentication
 
-When INE challenge runs for first time, a Staff User is created according this environment vars:
-
->INITIAL_STAFF_USERNAME=inestaff
->INITIAL_STAFF_EMAIL=email@domain.com
->INITIAL_STAFF_PASSWORD=*******
-
-With this Staff User, you will be able to get an Access Token, wich you'll use to authenticate in Users API's.
-
-#### Authentication Header
-Each requests to Users API's must send this header
-> Authorization: Bearer <your_access_token>
+To authenticate with our API's, you have to generate an Access Token
 
 ### Get user Access Token
 ```
 curl --location --request POST '127.0.0.1:8000/api/token/' \
---form 'username="inestaff"' \
+--form 'username="yourstaffuser"' \
 --form 'password="**********"'
 ```
+#### Authentication Header
+Each requests to Users API's must send this header
+> Authorization: Bearer <your_access_token>
+
+
  ## Internal Authentication
 
 If internal authentication is needed, you will have to generate an API Key from Django Admin interface (though API KEY PERMISSION section).
+For more information go to official [documentation.](https://florimondmanca.github.io/djangorestframework-api-key/guide/#creating-and-managing-api-keys)
 
-This is kind of token is usefull when you need to autorize request from other internal systems.
+This is kind of token is useful when you need to authorize request from other internal systems.
 
 #### Internal Authentication Header
 Each requests to Users API's must send this header
